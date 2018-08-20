@@ -8,7 +8,7 @@ export default class App extends React.Component {
 
       <View style={styles.container}>
         <Button style={styles.container2} color="#0ff" title="Hej"></Button>
-        <Image style={styles.backgroundImage} source={require('/Users/ITHS/Documents/ATOM/NERDZ/pokemon/Frontend/Assets/background2.png')}>
+        <Image style={styles.backgroundImage} source={require('../Frontend/Assets/background2.png')}>
           </Image>
 
       </View>
