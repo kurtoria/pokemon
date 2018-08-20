@@ -1,17 +1,18 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button, Image } from 'react-native';
 
 
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
 
-        /*<Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text> */
+      <View style={styles.container}>
+        <Button style={styles.container2} color="#0ff" title="Hej"></Button>
+        <Image style={styles.backgroundImage} source={require('/Users/ITHS/Documents/ATOM/NERDZ/pokemon/Frontend/Assets/background2.png')}>
+          </Image>
 
       </View>
+
     );
   }
 }
@@ -19,8 +20,19 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#000',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  container2: {
+    flex: 1,
+    justifyContent: 'center',
+      position: 'absolute'
+  },
+  backgroundImage: {
+        flex: 1,
+        width: 500,
+        height: 100,
+        resizeMode: 'cover'
+    }
 });
