@@ -1,21 +1,28 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Image } from 'react-native';
+import { StyleSheet, Text, View, Button, Image, TouchableHighlight, TouchableOpacity } from 'react-native';
 
 
 export default class App extends React.Component {
+  _throwPokeball() {
+    console.log('You threw the ball!')
+  }
   render() {
     return (
-
       <View style={styles.container}>
-        <Button style={styles.container2} color="#0ff" title="Hej"></Button>
-        <Image style={styles.backgroundImage} source={require('/Users/ITHS/Documents/ATOM/NERDZ/pokemon/Frontend/Assets/background2.png')}>
-          </Image>
-
+        <Image style={styles.backgroundImage}
+               source={require('/Users/ITHS/Documents/ATOM/NERDZ/pokemon/Frontend/Assets/background2.png')}>
+        </Image>
+        {/*()=>{alert("you clicked me")}*/}
+        <TouchableOpacity style={styles.clickArea} onPress={this._throwPokeball}>
+          <Image style={styles.ball}
+                 source={require('/Users/ITHS/Documents/ATOM/NERDZ/pokemon/Frontend/Assets/pokeball.png')}></Image>
+        </TouchableOpacity>
       </View>
 
     );
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -24,7 +31,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  container2: {
+  button: {
     flex: 1,
     justifyContent: 'center',
       position: 'absolute'
@@ -34,5 +41,19 @@ const styles = StyleSheet.create({
         width: 500,
         height: 100,
         resizeMode: 'cover'
+    },
+    ball: {
+      position: 'absolute',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: 100,
+      height: 100
+    },
+    clickArea: {
+      position: 'absolute',
+      top: '80%',
+      left: '40%',
+      width: 100,
+      height: 100
     }
 });
