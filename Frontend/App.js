@@ -15,16 +15,16 @@ class BattleScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Image style={styles.backgroundImage}
-               source={require('/Users/ITHS/Documents/ATOM/NERDZ/pokemon/Frontend/Assets/background2.png')}>
+               source={require('../Frontend/Assets/background2.png')}>
         </Image>
         {/*()=>{alert("you clicked me")}*/}
         <TouchableOpacity style={styles.clickArea} onPress={this._throwPokeball}>
           <Image style={styles.ball}
-                 source={require('/Users/ITHS/Documents/ATOM/NERDZ/pokemon/Frontend/Assets/pokeball.png')}></Image>
+                 source={require('../Frontend/Assets/pokeball.png')}></Image>
         </TouchableOpacity>
         <TouchableOpacity style={styles.exitArea} onPress={ ()=> navigate('Home') }>
           <Image style={styles.arrow}
-                 source={require('/Users/ITHS/Documents/ATOM/NERDZ/pokemon/Frontend/Assets/arrow.png')}></Image>
+                 source={require('../Frontend/Assets/arrow.png')}></Image>
         </TouchableOpacity>
       </View>
     );
@@ -41,20 +41,20 @@ class HomeScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Image style={styles.backgroundImage}
-               source={require('/Users/ITHS/Documents/ATOM/NERDZ/pokemon/Frontend/Assets/background4.png')}>
+               source={require('../Frontend/Assets/background4.png')}>
         </Image>
         <Image style={styles.logo}
-               source={require('/Users/ITHS/Documents/ATOM/NERDZ/pokemon/Frontend/Assets/logo.png')}>
+               source={require('../Frontend/Assets/logo.png')}>
         </Image>
         <Image style={styles.pika}
-               source={require('/Users/ITHS/Documents/ATOM/NERDZ/pokemon/Frontend/Assets/pikachu.gif')} />
+               source={require('../Frontend/Assets/pikachu.gif')} />
         <TouchableOpacity style={styles.questionArea} onPress={ ()=> navigate('Battle') }>
           <Image style={styles.question}
-                 source={require('/Users/ITHS/Documents/ATOM/NERDZ/pokemon/Frontend/Assets/questionmark.gif')} />
+                 source={require('../Frontend/Assets/questionmark.gif')} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.bagArea} onPress={ ()=> navigate('Inventory') }>
             <Image style={styles.bag}
-                 source={require('/Users/ITHS/Documents/ATOM/NERDZ/pokemon/Frontend/Assets/backpack.png')} />
+                 source={require('../Frontend/Assets/backpack.png')} />
         </TouchableOpacity>
       </View>
     )
@@ -71,11 +71,11 @@ class InventoryScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Image style={styles.backgroundImage}
-               source={require('/Users/ITHS/Documents/ATOM/NERDZ/pokemon/Frontend/Assets/background5.png')}>
+               source={require('../Frontend/Assets/background5.png')}>
         </Image>
         <TouchableOpacity style={styles.exitArea} onPress={ ()=> navigate('Home') }>
           <Image style={styles.arrow}
-                 source={require('/Users/ITHS/Documents/ATOM/NERDZ/pokemon/Frontend/Assets/arrow.png')}></Image>
+                 source={require('../Frontend/Assets/arrow.png')}></Image>
         </TouchableOpacity>
       </View>
     )
