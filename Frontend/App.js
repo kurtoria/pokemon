@@ -3,6 +3,10 @@ import { StyleSheet, Text, View, Button, Image, TouchableHighlight, TouchableOpa
 import { createStackNavigator } from 'react-navigation'
 
 class BattleScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Battle',
+    header: null
+  }
   _throwPokeball() {
     console.log('You threw the ball!')
   }
@@ -28,6 +32,10 @@ class BattleScreen extends React.Component {
 }
 
 class HomeScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Home',
+    header: null
+  }
   render() {
     const { navigate } = this.props.navigation
     return (
@@ -54,6 +62,10 @@ class HomeScreen extends React.Component {
 }
 
 class InventoryScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Inventory',
+    header: null
+  }
   render() {
     const { navigate } = this.props.navigation
     return (
@@ -74,6 +86,16 @@ const NavigationApp = createStackNavigator({
   Home: { screen: HomeScreen },
   Battle: { screen: BattleScreen },
   Inventory: { screen: InventoryScreen }
+},
+{
+    headerMode: 'screen'
+},
+ {
+  navigationOptions: {
+    headerStyle: {
+      marginTop: 26
+    }
+  }
 })
 
 export default class App extends React.Component {
@@ -130,7 +152,7 @@ const styles = StyleSheet.create({
     },
     exitArea: {
       position: 'absolute',
-      top: '3%',
+      top: '5%',
       left: '5%',
       width: 100,
       height: 50
@@ -144,7 +166,7 @@ const styles = StyleSheet.create({
       position: 'absolute',
       width: 50,
       height: 50,
-      top: '35%'
+      top: '38%'
     },
     question: {
       position: 'absolute',
