@@ -3,6 +3,15 @@ import { StyleSheet, Text, View, Button, Image, TouchableHighlight, TouchableOpa
 import { createStackNavigator } from 'react-navigation'
 
 class BattleScreen extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      pokeName: undefined,
+      pokePic: null,
+      cp: undefined
+    }
+    //this._randomizePokemon = this._randomizePokemon.bind(this)
+  }
   static navigationOptions = {
     title: 'Battle',
     header: null
@@ -10,18 +19,44 @@ class BattleScreen extends React.Component {
   _throwPokeball() {
     console.log('You threw the ball!')
   }
+  componentDidMount() {
+    let nr = Math.floor(Math.random() * 151) + 1
+    console.log(nr);
+
+    fetch('https://pokeapi.co/api/v2/pokemon/' + nr + '/')
+    .then(response => response.json())
+    .then(result => {
+      console.log(result.forms[0].name);
+      console.log(result.sprites.front_default);
+
+      this.setState({
+        pokeName: result.forms[0].name,
+        pokePic: result.sprites.front_default
+      })
+    })
+  }
   render() {
+    console.log("IN RENDER" + this.state.pokePic)
     const { navigate } = this.props.navigation
     return (
       <View style={styles.container}>
+
+        {/*Background image*/}
         <Image style={styles.backgroundImage}
                source={require('../Frontend/Assets/background2.png')}>
         </Image>
-        {/*()=>{alert("you clicked me")}*/}
+
+        {/*Pokemon pic*/}
+        <Image style={styles.pokemon}
+               source={{uri: this.state.pokePic}}></Image>
+
+        {/*Pokebal pic*/}
         <TouchableOpacity style={styles.clickArea} onPress={this._throwPokeball}>
           <Image style={styles.ball}
                  source={require('../Frontend/Assets/pokeball.png')}></Image>
         </TouchableOpacity>
+
+        {/*Back arrow*/}
         <TouchableOpacity style={styles.exitArea} onPress={ ()=> navigate('Home') }>
           <Image style={styles.arrow}
                  source={require('../Frontend/Assets/arrow.png')}></Image>
@@ -184,5 +219,10 @@ const styles = StyleSheet.create({
       position: 'absolute',
       width: 60,
       height: 100,
+    },
+    pokemon: {
+      position: 'absolute',
+      width: 250,
+      height: 250,
     }
 });
