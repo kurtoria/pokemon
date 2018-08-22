@@ -86,7 +86,7 @@ export class BattleScreen extends React.Component {
 
         {/*Pokemon pic*/}
         <Image style={styles.pokemon}
-               source={this.state.pokePic ? {uri: this.state.pokePic} : null}></Image>
+               source={this.state.pokePic ? {uri: this.state.pokePic} : require('../Assets/glitter.gif')}></Image>
 
         {/*Pokebal pic*/}
         <TouchableOpacity style={styles.clickArea} onPress={this._throwPokeball}>
