@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, Button, Image, TouchableHighlight, TouchableOpa
 import { createStackNavigator } from 'react-navigation'
 import { Font } from 'expo';
 const themeSound = new Expo.Audio.Sound();
+const battleSound = new Expo.Audio.Sound();
+const inventorySound = new Expo.Audio.Sound();
 
 class BattleScreen extends React.Component {
   constructor(props) {
@@ -13,7 +15,6 @@ class BattleScreen extends React.Component {
       cp: undefined,
       fontLoaded: false
     }
-    //this._randomizePokemon = this._randomizePokemon.bind(this)
   }
   static navigationOptions = {
     title: 'Battle',
@@ -42,8 +43,6 @@ class BattleScreen extends React.Component {
         pokePic: result.sprites.front_default
       })
     })
-
-    const battleSound = new Expo.Audio.Sound();
 
     try {
       await battleSound.loadAsync(require('../Frontend/Assets/battle.mp3'))
@@ -106,10 +105,6 @@ class HomeScreen extends React.Component {
     }
   }
 
-  _onPikaPress() {
-    themeSound.stopAsync()
-  }
-
   render() {
     const { navigate } = this.props.navigation
     return (
@@ -123,14 +118,17 @@ class HomeScreen extends React.Component {
         <Image style={styles.pika}
                source={require('../Frontend/Assets/pikachu.gif')} />
              <TouchableOpacity style={styles.questionArea} onPress={ ()=> {
-                 themeSound.stopAsync() 
+                 themeSound.stopAsync()
                  navigate('Battle')
                }
               }>
           <Image style={styles.question}
                  source={require('../Frontend/Assets/questionmark.gif')} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.bagArea} onPress={ ()=> navigate('Inventory') }>
+        <TouchableOpacity style={styles.bagArea} onPress={ ()=> {
+            themeSound.stopAsync()
+            navigate('Inventory')}
+           }>
             <Image style={styles.bag}
                  source={require('../Frontend/Assets/backpack.png')} />
         </TouchableOpacity>
@@ -143,6 +141,16 @@ class InventoryScreen extends React.Component {
   static navigationOptions = {
     title: 'Inventory',
     header: null
+  }
+  async componentDidMount() {
+
+    try {
+      await inventorySound.loadAsync(require('../Frontend/Assets/inventory.mp3'))
+      await inventorySound.playAsync()
+      console.log("Playing sound")
+    } catch (error) {
+      console.log("Error playing sound")
+    }
   }
   render() {
     const { navigate } = this.props.navigation
