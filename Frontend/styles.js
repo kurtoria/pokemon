@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Button, Image, TouchableHighlight, TouchableOpacity, Flatlist } from 'react-native';
+import { StyleSheet, Text, View, Button, Image, TouchableHighlight, TouchableOpacity, Flatlist, Dimensions } from 'react-native';
 import { Font } from 'expo';
 
 export const styles = StyleSheet.create({
@@ -100,5 +100,39 @@ export const styles = StyleSheet.create({
       top: '30%',
       fontFamily: "fipps-regular",
       fontSize: 20
+    },
+    text: {
+      position: 'absolute',
+      color: 'white',
+      top: '30%',
+      fontFamily: "fipps-regular",
+      fontSize: 20
+    },
+    presentPokemon: {
+      position: 'absolute',
+      color: 'blue',
+      top: '30%',
+      fontFamily: "fipps-regular",
+      fontSize: 20
+    },
+    flatlistContainer: {
+      flex: 1,
+      marginVertical: 20,
+      backgroundColor: 'transparent',
+      width: Dimensions.get('window').width
+    },
+    item: {
+      backgroundColor: 'transparent',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flex: 1,
+      margin: 1,
+      height: Dimensions.get('window').width/3
+    },
+    itemInvisible: {
+      backgroundColor: 'transparent'
+    },
+    itemText: {
+      color: 'red'
     }
 });
