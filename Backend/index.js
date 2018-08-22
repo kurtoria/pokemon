@@ -34,7 +34,6 @@ app.get('/', function(request, response) {
 })
 
 //To insert pokemon
-//TODO fixa så felhantering hanteras
 app.post('/', function(request, response) {
   response.send(request.body)
   db.collection('pokemons').insertOne({
@@ -49,7 +48,6 @@ app.post('/', function(request, response) {
 })
 
 //To delete pokemon from id
-//TODO fixa så felhantering hanteras
 app.delete('/:id', function (request, result) {
   var id = request.params.id;
   //var collection = db.get().collection('pokemons');
