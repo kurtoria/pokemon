@@ -8,11 +8,6 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  button: {
-    flex: 1,
-    justifyContent: 'center',
-      position: 'absolute'
-  },
   backgroundImage: {
         flex: 1,
         width: 500,
@@ -23,8 +18,8 @@ export const styles = StyleSheet.create({
       position: 'absolute',
       top: '5%',
       justifyContent: 'center',
-      width: 400,
-      height: 100
+      width: 350,
+      height: 90
     },
     ball: {
       position: 'absolute',
@@ -63,7 +58,7 @@ export const styles = StyleSheet.create({
       position: 'absolute',
       width: 50,
       height: 50,
-      top: '38%'
+      top: '35%'
     },
     question: {
       position: 'absolute',
@@ -87,9 +82,18 @@ export const styles = StyleSheet.create({
       width: 250,
       height: 250,
     },
+    textView: {
+      backgroundColor: '#FFFFFF70',
+      borderRadius: 10,
+      borderWidth: 0,
+      position: 'absolute',
+      top: '30%',
+      width: 240,
+      height: 45
+    },
     text: {
       position: 'absolute',
-      color: 'white',
+      color: 'black',
       top: '30%',
       fontFamily: "fipps-regular",
       fontSize: 20

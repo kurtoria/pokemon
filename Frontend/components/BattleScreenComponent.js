@@ -78,7 +78,7 @@ export class BattleScreen extends React.Component {
         <Image style={styles.backgroundImage}
                source={require('../Assets/background2.png')}>
         </Image>
-
+        <View style={styles.textView}/> {/*TODO: set styles right here and evaluate width from name.length*/}
         {/*Name of pokemon*/}
         {this.state.fontLoaded ? (
         <Text style={styles.text}>{this.state.pokePic ? this.state.pokeName : ""}</Text>
