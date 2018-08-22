@@ -38,10 +38,8 @@ app.get('/', function(request, response) {
 app.post('/', function(request, response) {
   response.send(request.body)
   db.collection('pokemons').insertOne({
-    "pokeIndex": request.body.pokeIndex,
     "pokeName": request.body.pokeName,
     "pokePic": request.body.pokePic,
-    "cp": request.body.cp
   }), function(error){
     if (error) {
       response.status(500).send(error);

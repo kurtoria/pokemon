@@ -13,14 +13,29 @@ class BattleScreen extends React.Component {
       cp: undefined,
       fontLoaded: false
     }
+    this._throwPokeball = this._throwPokeball.bind(this)
     //this._randomizePokemon = this._randomizePokemon.bind(this)
   }
   static navigationOptions = {
     title: 'Battle',
     header: null
   }
+
+  //Victoria skolIP: 192.168.1.88
   _throwPokeball() {
     console.log('You threw the ball!')
+    fetch('http://192.168.1.88:3000/', {
+      body: JSON.stringify({
+        pokeName: this.state.pokeName,
+        pokePic: this.state.pokePic
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST'
+    }).catch(function(error) {
+      console.log("Error: " + error);
+    })
   }
   async componentDidMount() {
     await Font.loadAsync({
@@ -123,7 +138,7 @@ class HomeScreen extends React.Component {
         <Image style={styles.pika}
                source={require('../Frontend/Assets/pikachu.gif')} />
              <TouchableOpacity style={styles.questionArea} onPress={ ()=> {
-                 themeSound.stopAsync() 
+                 themeSound.stopAsync()
                  navigate('Battle')
                }
               }>
