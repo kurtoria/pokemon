@@ -26,7 +26,7 @@ export class InventoryScreen extends React.Component {
         style={styles.item}
         >
         <Text style={styles.itemText}>{item.pokeName}</Text>
-        <Image source={require(item.pokePic)}/>
+        {/*<Image source={require(item.pokePic)}/>*/}
       </View>
     )
   }
