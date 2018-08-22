@@ -1,8 +1,8 @@
 var bodyParser= require('body-parser')
 var express = require('express')
-var MongoClient = require('mongodb').MongoClient;
-var ObjectId = require('mongodb').ObjectID
-//var {MongoClient, ObjectId} = require('mongodb')
+//var MongoClient = require('mongodb').MongoClient;
+//var ObjectId = require('mongodb').ObjectID
+var {MongoClient, ObjectId} = require('mongodb')
 
 
 var app = express()
@@ -20,29 +20,7 @@ MongoClient.connect('mongodb://localhost:27017', function(error, client) {
 })
 
 app.use(bodyParser.urlencoded({extended: true}))
-
-app.post('/', (request, result) => {
-  //To insert pokemon
-  db.collection('pokemons').insert({
-    index: '1',
-    name: 'Bulbasaur'
-  }, function (error, result) {
-    // Dokumentet har lagts in.
-  });
-})
-
-/*
-app.post('/', (request, result) => {
-  db.collection('pokemons').save(request.body, (error, result) => {
-    if (error) {
-      return console.log(error)
-    }
-    console.log('saved to database')
-    result.redirect('/')
-  })
-})
-*/
-
+app.use(bodyParser.json());
 
 //To get all pokemons
 app.get('/', function(request, response) {
@@ -55,7 +33,46 @@ app.get('/', function(request, response) {
   })
 })
 
+//To insert pokemon
+//TODO fixa så felhantering hanteras
+app.post('/', function(request, response) {
+  response.send(request.body)
+  db.collection('pokemons').insertOne({
+    "pokeIndex": request.body.pokeIndex,
+    "pokeName": request.body.pokeName,
+    "pokePic": request.body.pokePic,
+    "cp": request.body.cp
+  }), function(error){
+    if (error) {
+      response.status(500).send(error);
+      return;
+    }
+  };
+})
+
+//To delete pokemon from id
+//TODO fixa så felhantering hanteras
+app.delete('/:id', function (request, result) {
+  var id = request.params.id;
+  //var collection = db.get().collection('pokemons');
+
+  db.collection('pokemons').deleteOne({ _id: new ObjectId(id) }, function (error, results) {
+    if (error) {
+      response.status(500).send(error);
+      return;
+    }
+  });
+  result.json({ success: id })
+});
+
+//Kanske behövs för att patha till rätt håll? Koll upp!
+//var path = require('path');
+//app.use(express.static(path.join(path.resolve(), '../Frontend')));
+
+
 //Listen pga importante
 app.listen(3000, function() {
   console.log("Express is running");
 })
+
+module.exports = app
