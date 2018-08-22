@@ -166,7 +166,6 @@ class InventoryScreen extends React.Component {
     });
 
 
-
   }
   render() {
     const { navigate } = this.props.navigation
