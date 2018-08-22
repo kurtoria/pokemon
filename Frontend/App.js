@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Image, TouchableHighlight, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, Image, TouchableHighlight, TouchableOpacity, Flatlist } from 'react-native';
 import { createStackNavigator } from 'react-navigation'
 import { Font } from 'expo';
 const themeSound = new Expo.Audio.Sound();
@@ -23,9 +23,10 @@ class BattleScreen extends React.Component {
   }
 
   //Victoria skolIP: 192.168.1.88
+  //Moas skolIP: 192.168.1.89
   _throwPokeball() {
     console.log('You threw the ball!')
-    fetch('http://192.168.1.88:3000/', {
+    fetch('http://192.168.1.89:3000/', {
       body: JSON.stringify({
         pokeName: this.state.pokeName,
         pokePic: this.state.pokePic
@@ -158,7 +159,9 @@ class InventoryScreen extends React.Component {
     this.state = {
       pokeName: undefined,
       pokePic: null,
-      fontLoaded: false
+      fontLoaded: false,
+      pokeArray: null,
+      pokeArrayIsFetched: false
     }
   }
   static navigationOptions = {
@@ -174,13 +177,27 @@ class InventoryScreen extends React.Component {
       console.log("Error playing sound")
     }
 
+    //Victoria skolIP: 192.168.1.88
+    //Moas skolIP: 192.168.1.89
     fetch('http://192.168.1.89:3000/').then(function (response) {
     return response.json();
     }).then(function (result) {
       console.log(result);
+      this.setState({
+        pokeArray: result/*,
+        pokeArrayIsFetched: true*/
+      }).bind(this)
     });
-
-
+//var list = this.state.pokeArray.map(pokemon => console.log(pokemon.name))
+  }
+  renderItem = ({ item, index }) => {
+    return (
+      <View
+        style={styles.item}
+        >
+        <Text style={styles.itemText}>{item.pokeName}</Text>
+      </View>
+    )
   }
   render() {
     const { navigate } = this.props.navigation
@@ -196,7 +213,20 @@ class InventoryScreen extends React.Component {
                  source={require('../Frontend/Assets/arrow.png')}></Image>
         </TouchableOpacity>
 
-        <Text style={styles.presentPokemon}>Hejhej</Text>
+    {this.state.pokeArrayIsFetched ? (
+      <Flatlist
+        data={this.state.pokeArray}
+        style={styles.flatlistContainer}
+        renderItem={this.renderItem}
+        />
+    ) : null}
+
+
+    {/*  <Text style={styles.presentPokemon}>hej</Text> */}
+
+
+
+
       </View>
     )
   }
