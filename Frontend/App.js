@@ -138,12 +138,19 @@ class HomeScreen extends React.Component {
 }
 
 class InventoryScreen extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      pokeName: undefined,
+      pokePic: null,
+      fontLoaded: false
+    }
+  }
   static navigationOptions = {
     title: 'Inventory',
     header: null
   }
   async componentDidMount() {
-
     try {
       await inventorySound.loadAsync(require('../Frontend/Assets/inventory.mp3'))
       await inventorySound.playAsync()
@@ -151,6 +158,15 @@ class InventoryScreen extends React.Component {
     } catch (error) {
       console.log("Error playing sound")
     }
+
+    fetch('http://192.168.1.89:3000/').then(function (response) {
+    return response.json();
+    }).then(function (result) {
+      console.log(result);
+    });
+
+
+
   }
   render() {
     const { navigate } = this.props.navigation
@@ -159,10 +175,14 @@ class InventoryScreen extends React.Component {
         <Image style={styles.backgroundImage}
                source={require('../Frontend/Assets/background5.png')}>
         </Image>
+
+
         <TouchableOpacity style={styles.exitArea} onPress={ ()=> navigate('Home') }>
           <Image style={styles.arrow}
                  source={require('../Frontend/Assets/arrow.png')}></Image>
         </TouchableOpacity>
+
+        <Text style={styles.presentPokemon}>Hejhej</Text>
       </View>
     )
   }
@@ -292,6 +312,13 @@ const styles = StyleSheet.create({
     text: {
       position: 'absolute',
       color: 'white',
+      top: '30%',
+      fontFamily: "fipps-regular",
+      fontSize: 20
+    },
+    presentPokemon: {
+      position: 'absolute',
+      color: 'blue',
       top: '30%',
       fontFamily: "fipps-regular",
       fontSize: 20
