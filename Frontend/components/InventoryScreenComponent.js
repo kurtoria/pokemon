@@ -25,8 +25,16 @@ export class InventoryScreen extends React.Component {
       <View
         style={styles.item}
         >
-        <Text style={styles.itemText}>{item.pokeName}</Text>
-        {/*<Image source={require(item.pokePic)}/>*/}
+          {/*<Image style={styles.inventoryPokemon}
+                 source={require('../Assets/pikachu.gif')}>
+          </Image> */}
+
+          {console.log("Pic of pokemon is: " + item.pokePic)}
+          <Image style={styles.inventoryPokemon}
+                 source={{uri: item.pokePic}}>
+          </Image>
+
+          <Text style={styles.itemText}>{item.pokeName}</Text>
       </View>
     )
   }
@@ -56,20 +64,16 @@ export class InventoryScreen extends React.Component {
 
     //Victoria skolIP: 192.168.1.88
     //Moas skolIP: 192.168.1.89
-    fetch('http://192.168.1.88:3000/').then(function (response) {
+    fetch('http://localhost:3000/').then(function (response) {
       return response.json();
     })
     .then(result => {
       console.log(result);
 
-//formatData(this.state.pokeArray)
-
       this.setState({
         pokeArray: formatData(result.map(pokeItem => ({ ...pokeItem, key: pokeItem._id}))),
         pokeArrayIsFetched: true
-      })/*.bind(this)/*.bind(this).catch(function (error){
-        console.log("Error: " + error);
-      })*/
+      })
     })
   }
 
@@ -84,7 +88,11 @@ export class InventoryScreen extends React.Component {
       </Image>
 
 
-      <TouchableOpacity style={styles.exitArea} onPress={ ()=> navigate('Home') }>
+      <TouchableOpacity style={styles.exitArea} onPress={ ()=> {
+          inventorySound.stopAsync()
+          navigate('Home')
+        }
+       }>
         <Image style={styles.arrow}
                source={require('../Assets/arrow.png')}></Image>
       </TouchableOpacity>
@@ -95,7 +103,6 @@ export class InventoryScreen extends React.Component {
           data={this.state.pokeArray}
           style={styles.flatlistContainer}
           renderItem={this.renderItem}
-          //renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
           numColumns={3}
           />
       ) : null}

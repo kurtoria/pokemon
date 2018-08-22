@@ -20,11 +20,11 @@ export class BattleScreen extends React.Component {
     header: null
   }
 
-  //Victoria skolIP: 192.168.1.88
-  //Moas skolIP: 192.168.1.89
+  //Victoria skolIP: 192.168.1.88:3000
+  //Moas skolIP: 192.168.1.89:3000
   _throwPokeball() {
     console.log('You threw the ball!')
-    fetch('http://192.168.1.88:3000/', {
+    fetch('http://localhost:3000/', {
       body: JSON.stringify({
         pokeName: this.state.pokeName,
         pokePic: this.state.pokePic
@@ -81,7 +81,7 @@ export class BattleScreen extends React.Component {
 
         {/*Name of pokemon*/}
         {this.state.fontLoaded ? (
-        <Text style={styles.text}>{this.state.pokeName}</Text>
+        <Text style={styles.text}>{this.state.pokePic ? this.state.pokeName : ""}</Text>
         ) : null}
 
         {/*Pokemon pic*/}
@@ -95,7 +95,11 @@ export class BattleScreen extends React.Component {
         </TouchableOpacity>
 
         {/*Back arrow*/}
-        <TouchableOpacity style={styles.exitArea} onPress={ ()=> navigate('Home') }>
+        <TouchableOpacity style={styles.exitArea} onPress={ ()=> {
+            battleSound.stopAsync()
+            this.props.navigation.goBack()
+          }
+         }>
           <Image style={styles.arrow}
                  source={require('../Assets/arrow.png')}></Image>
         </TouchableOpacity>

@@ -101,25 +101,14 @@ export const styles = StyleSheet.create({
       fontFamily: "fipps-regular",
       fontSize: 20
     },
-    text: {
-      position: 'absolute',
-      color: 'white',
-      top: '30%',
-      fontFamily: "fipps-regular",
-      fontSize: 20
-    },
-    presentPokemon: {
-      position: 'absolute',
-      color: 'blue',
-      top: '30%',
-      fontFamily: "fipps-regular",
-      fontSize: 20
-    },
     flatlistContainer: {
       flex: 1,
       marginVertical: 20,
       backgroundColor: 'transparent',
-      width: Dimensions.get('window').width
+      width: Dimensions.get('window').width,
+      height: Dimensions.get('window').height - 60,
+      position: 'absolute',
+      top: 60
     },
     item: {
       backgroundColor: 'transparent',
@@ -133,6 +122,13 @@ export const styles = StyleSheet.create({
       backgroundColor: 'transparent'
     },
     itemText: {
-      color: 'red'
+      color: 'black',
+      fontFamily: "fipps-regular",
+      fontSize: 12
+    },
+    inventoryPokemon: {
+      width: 130,
+      height: 130,
+      top: '20%'
     }
 });

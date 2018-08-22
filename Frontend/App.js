@@ -227,7 +227,8 @@ const NavigationApp = createStackNavigator({
   Inventory: { screen: InventoryScreen }
 },
 {
-    headerMode: 'screen'
+    headerMode: 'none',
+    mode: 'modal',
 },
  {
   navigationOptions: {
