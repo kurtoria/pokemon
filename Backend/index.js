@@ -1,9 +1,8 @@
 var bodyParser= require('body-parser')
 var express = require('express')
-var MongoClient = require('mongodb').MongoClient;
-var ObjectId = require('mongodb').ObjectID
-//var uuidv4 = require('uuid/v4')
-//var {MongoClient, ObjectId} = require('mongodb')
+//var MongoClient = require('mongodb').MongoClient;
+//var ObjectId = require('mongodb').ObjectID
+var {MongoClient, ObjectId} = require('mongodb')
 
 
 var app = express()
@@ -67,8 +66,8 @@ app.delete('/:id', function (request, result) {
 });
 
 //Kanske behövs för att patha till rätt håll? Koll upp!
-var path = require('path');
-app.use(express.static(path.join(path.resolve(), '../Frontend')));
+//var path = require('path');
+//app.use(express.static(path.join(path.resolve(), '../Frontend')));
 
 
 //Listen pga importante
