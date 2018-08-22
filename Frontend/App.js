@@ -1,11 +1,17 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Image, TouchableHighlight, TouchableOpacity, Flatlist } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableHighlight, TouchableOpacity, Flatlist } from 'react-native';
 import { createStackNavigator } from 'react-navigation'
 import { Font } from 'expo';
-const themeSound = new Expo.Audio.Sound();
-const battleSound = new Expo.Audio.Sound();
-const inventorySound = new Expo.Audio.Sound();
+import { styles } from './styles.js'
+import { HomeScreen } from './components/HomeScreenComponent.js'
+import { BattleScreen } from './components/BattleScreenComponent.js'
+import { InventoryScreen } from './components/InventoryScreenComponent.js'
 
+//const themeSound = new Expo.Audio.Sound();
+//const battleSound = new Expo.Audio.Sound();
+//const inventorySound = new Expo.Audio.Sound();
+
+/*
 class BattleScreen extends React.Component {
   constructor(props) {
     super(props)
@@ -26,7 +32,7 @@ class BattleScreen extends React.Component {
   //Moas skolIP: 192.168.1.89
   _throwPokeball() {
     console.log('You threw the ball!')
-    fetch('http://192.168.1.89:3000/', {
+    fetch('http://192.168.1.88:3000/', {
       body: JSON.stringify({
         pokeName: this.state.pokeName,
         pokePic: this.state.pokePic
@@ -75,27 +81,27 @@ class BattleScreen extends React.Component {
     return (
       <View style={styles.container}>
 
-        {/*Background image*/}
+        {/*Background image}
         <Image style={styles.backgroundImage}
                source={require('../Frontend/Assets/background2.png')}>
         </Image>
 
-        {/*Name of pokemon*/}
+        {/*Name of pokemon}
         {this.state.fontLoaded ? (
         <Text style={styles.text}>{this.state.pokeName}</Text>
         ) : null}
 
-        {/*Pokemon pic*/}
+        {/*Pokemon pic}
         <Image style={styles.pokemon}
                source={{uri: this.state.pokePic}}></Image>
 
-        {/*Pokebal pic*/}
+        {/*Pokebal pic}
         <TouchableOpacity style={styles.clickArea} onPress={this._throwPokeball}>
           <Image style={styles.ball}
                  source={require('../Frontend/Assets/pokeball.png')}></Image>
         </TouchableOpacity>
 
-        {/*Back arrow*/}
+        {/*Back arrow}
         <TouchableOpacity style={styles.exitArea} onPress={ ()=> navigate('Home') }>
           <Image style={styles.arrow}
                  source={require('../Frontend/Assets/arrow.png')}></Image>
@@ -103,8 +109,9 @@ class BattleScreen extends React.Component {
       </View>
     );
   }
-}
+}*/
 
+/*
 class HomeScreen extends React.Component {
   static navigationOptions = {
     title: 'Home',
@@ -153,6 +160,7 @@ class HomeScreen extends React.Component {
   }
 }
 
+/*
 class InventoryScreen extends React.Component {
   constructor(props) {
     super(props)
@@ -163,6 +171,7 @@ class InventoryScreen extends React.Component {
       pokeArray: null,
       pokeArrayIsFetched: false
     }
+
   }
   static navigationOptions = {
     title: 'Inventory',
@@ -179,26 +188,19 @@ class InventoryScreen extends React.Component {
 
     //Victoria skolIP: 192.168.1.88
     //Moas skolIP: 192.168.1.89
-    fetch('http://192.168.1.89:3000/').then(function (response) {
-    return response.json();
-    }).then(function (result) {
+    fetch('http://192.168.1.88:3000/').then(function (response) {
+      return response.json();
+    })
+    .then(result => {
       console.log(result);
       this.setState({
-        pokeArray: result/*,
-        pokeArrayIsFetched: true*/
-      }).bind(this)
-    });
-//var list = this.state.pokeArray.map(pokemon => console.log(pokemon.name))
+        pokeArray: result
+      })/*.bind(this)/*.bind(this).catch(function (error){
+        console.log("Error: " + error);
+      })
+    })
   }
-  renderItem = ({ item, index }) => {
-    return (
-      <View
-        style={styles.item}
-        >
-        <Text style={styles.itemText}>{item.pokeName}</Text>
-      </View>
-    )
-  }
+
   render() {
     const { navigate } = this.props.navigation
     return (
@@ -213,24 +215,11 @@ class InventoryScreen extends React.Component {
                  source={require('../Frontend/Assets/arrow.png')}></Image>
         </TouchableOpacity>
 
-    {this.state.pokeArrayIsFetched ? (
-      <Flatlist
-        data={this.state.pokeArray}
-        style={styles.flatlistContainer}
-        renderItem={this.renderItem}
-        />
-    ) : null}
-
-
-    {/*  <Text style={styles.presentPokemon}>hej</Text> */}
-
-
-
-
       </View>
     )
   }
 }
+*/
 
 const NavigationApp = createStackNavigator({
   Home: { screen: HomeScreen },
@@ -267,6 +256,7 @@ export default class App extends React.Component {
   }
 }
 
+/*
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -368,3 +358,4 @@ const styles = StyleSheet.create({
       fontSize: 20
     }
 });
+*/
