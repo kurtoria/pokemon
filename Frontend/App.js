@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, Image, TouchableHighlight, TouchableOpacity } from 'react-native';
 import { createStackNavigator } from 'react-navigation'
+import { Font } from 'expo';
+const themeSound = new Expo.Audio.Sound();
 
 class BattleScreen extends React.Component {
   constructor(props) {
@@ -8,7 +10,8 @@ class BattleScreen extends React.Component {
     this.state = {
       pokeName: undefined,
       pokePic: null,
-      cp: undefined
+      cp: undefined,
+      fontLoaded: false
     }
     //this._randomizePokemon = this._randomizePokemon.bind(this)
   }
@@ -19,7 +22,12 @@ class BattleScreen extends React.Component {
   _throwPokeball() {
     console.log('You threw the ball!')
   }
-  componentDidMount() {
+  async componentDidMount() {
+    await Font.loadAsync({
+      'fipps-regular': require('../Frontend/Assets/Fipps-Regular.otf'),
+    });
+    this.setState({ fontLoaded: true });
+
     let nr = Math.floor(Math.random() * 151) + 1
     console.log(nr);
 
@@ -30,10 +38,21 @@ class BattleScreen extends React.Component {
       console.log(result.sprites.front_default);
 
       this.setState({
-        pokeName: result.forms[0].name,
+        pokeName: result.forms[0].name.toUpperCase(),
         pokePic: result.sprites.front_default
       })
     })
+
+    const battleSound = new Expo.Audio.Sound();
+
+    try {
+      await battleSound.loadAsync(require('../Frontend/Assets/battle.mp3'))
+      await battleSound.playAsync()
+      console.log("Playing sound")
+    } catch (error) {
+      console.log("Error playing sound")
+    }
+
   }
   render() {
     console.log("IN RENDER" + this.state.pokePic)
@@ -45,6 +64,11 @@ class BattleScreen extends React.Component {
         <Image style={styles.backgroundImage}
                source={require('../Frontend/Assets/background2.png')}>
         </Image>
+
+        {/*Name of pokemon*/}
+        {this.state.fontLoaded ? (
+        <Text style={styles.text}>{this.state.pokeName}</Text>
+        ) : null}
 
         {/*Pokemon pic*/}
         <Image style={styles.pokemon}
@@ -71,6 +95,21 @@ class HomeScreen extends React.Component {
     title: 'Home',
     header: null
   }
+  async componentDidMount() {
+
+    try {
+      await themeSound.loadAsync(require('../Frontend/Assets/theme.mp3'))
+      await themeSound.playAsync()
+      console.log("Playing sound")
+    } catch (error) {
+      console.log("Error playing sound")
+    }
+  }
+
+  _onPikaPress() {
+    themeSound.stopAsync()
+  }
+
   render() {
     const { navigate } = this.props.navigation
     return (
@@ -83,7 +122,11 @@ class HomeScreen extends React.Component {
         </Image>
         <Image style={styles.pika}
                source={require('../Frontend/Assets/pikachu.gif')} />
-        <TouchableOpacity style={styles.questionArea} onPress={ ()=> navigate('Battle') }>
+             <TouchableOpacity style={styles.questionArea} onPress={ ()=> {
+                 themeSound.stopAsync() 
+                 navigate('Battle')
+               }
+              }>
           <Image style={styles.question}
                  source={require('../Frontend/Assets/questionmark.gif')} />
         </TouchableOpacity>
@@ -134,6 +177,19 @@ const NavigationApp = createStackNavigator({
 })
 
 export default class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      fontLoaded: false
+    }
+    //this._randomizePokemon = this._randomizePokemon.bind(this)
+  }
+  async componentDidMount() {
+      await Font.loadAsync({
+        'fipps-regular': require('../Frontend/Assets/Fipps-Regular.otf'),
+      });
+      this.setState({ fontLoaded: true });
+    }
   render() {
     return <NavigationApp/>
   }
@@ -224,5 +280,12 @@ const styles = StyleSheet.create({
       position: 'absolute',
       width: 250,
       height: 250,
+    },
+    text: {
+      position: 'absolute',
+      color: 'white',
+      top: '30%',
+      fontFamily: "fipps-regular",
+      fontSize: 20
     }
 });
