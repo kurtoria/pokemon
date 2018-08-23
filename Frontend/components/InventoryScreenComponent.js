@@ -55,24 +55,14 @@ export class InventoryScreen extends React.Component {
     header: null
   }
   async componentDidMount() {
-    /*try {
+    try {
       await inventorySound.loadAsync(require('../Assets/inventory.mp3'))
       await inventorySound.playAsync()
       console.log("Playing sound")
     } catch (error) {
       console.log("Error playing sound")
-    }*/
-    this._startMusic()
+    }
   this._getAllFromDataBase()
-}
-async _startMusic() {
-  try {
-    await inventorySound.loadAsync(require('../Assets/inventory.mp3'))
-    await inventorySound.playAsync()
-    console.log("Playing sound")
-  } catch (error) {
-    console.log("Error playing sound")
-  }
 }
   _getAllFromDataBase() {
     console.log("Inside get All From Database");
