@@ -11,7 +11,8 @@ export class BattleScreen extends React.Component {
       pokeName: undefined,
       pokePic: null,
       cp: undefined,
-      fontLoaded: false
+      fontLoaded: false,
+      isCatching: false
     }
     this._throwPokeball = this._throwPokeball.bind(this)
   }
@@ -34,6 +35,23 @@ export class BattleScreen extends React.Component {
     }).catch(function(error) {
       console.log("Error: " + error);
     })
+
+    this.setState({
+      isCatching: true
+    })
+    console.log("catching before: " + this.state.isCatching);
+
+
+    setTimeout(() => {
+      this.setState({
+        isCatching: false
+      })
+      console.log("catching after: " + this.state.isCatching);
+      console.log("3 sec after");
+    }, 3000)
+
+
+
   }
   async componentDidMount() {
     await Font.loadAsync({
@@ -76,21 +94,35 @@ export class BattleScreen extends React.Component {
         <Image style={styles.backgroundImage}
                source={require('../Assets/background2.png')}>
         </Image>
-        <View style={styles.textView}/> {/*TODO: set styles right here and evaluate width from name.length*/}
+
+        {this.state.isCatching ? null :
+        <View style={styles.textView}/>
+        }
+
         {/*Name of pokemon*/}
-        {this.state.fontLoaded ? (
+
+        {this.state.fontLoaded && !this.state.isCatching ? (
         <Text style={styles.text}>{this.state.pokePic ? this.state.pokeName : ""}</Text>
         ) : null}
 
+
+
         {/*Pokemon pic*/}
+        {this.state.isCatching ?
+        <Image style={styles.pokemon}
+                 source={require('../Assets/pokeball.png')}></Image> :
+
         <Image style={styles.pokemon}
                source={this.state.pokePic ? {uri: this.state.pokePic} : require('../Assets/glitter.gif')}></Image>
+           }
 
         {/*Pokeball pic*/}
+        {this.state.isCatching ? null :
         <TouchableOpacity style={styles.bollArea} onPress={this._throwPokeball}>
           <Image style={styles.ball}
                  source={require('../Assets/pokeball.png')}></Image>
         </TouchableOpacity>
+        }
 
         {/*Back arrow*/}
         <TouchableOpacity style={styles.exitArea} onPress={ ()=> {
