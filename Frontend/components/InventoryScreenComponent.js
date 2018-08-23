@@ -33,7 +33,7 @@ export class InventoryScreen extends React.Component {
               console.log('You deleted ' + item.pokeName)
               this.state.pokeArray.splice(index, 1)
 
-            fetch("http://10.101.1.51:3000/" + item._id + "/", {
+            fetch("http://10.101.1.57:3000/" + item._id + "/", {
                 method: 'DELETE'
              })
              this._getAllFromDataBase()
@@ -67,7 +67,7 @@ export class InventoryScreen extends React.Component {
     console.log("Inside get All From Database");
     //Victoria skolIP: 192.168.1.88
     //Moas skolIP: 192.168.1.89
-    fetch('http://10.101.1.51:3000/').then(function (response) {
+    fetch('http://10.101.1.57:3000/').then(function (response) {
       return response.json();
     })
     .then(result => {
