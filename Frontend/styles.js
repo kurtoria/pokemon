@@ -35,10 +35,9 @@ export const styles = StyleSheet.create({
       width: 100,
       height: 50
     },
-    clickArea: {
+    bollArea: {
       position: 'absolute',
       top: '80%',
-      left: '40%',
       width: 100,
       height: 100
     },
@@ -134,5 +133,8 @@ export const styles = StyleSheet.create({
       width: 130,
       height: 130,
       top: '20%'
+    },
+    touchInventory: {
+      
     }
 });

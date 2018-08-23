@@ -14,7 +14,11 @@ export class InventoryScreen extends React.Component {
       pokeArray: [],
       pokeArrayIsFetched: false
     }
-
+  this._getAllFromDataBase = this._getAllFromDataBase.bind(this)
+  }
+  _onLongPressInventory(index, name) {
+    console.log('You deleted ' + name)
+    this.state.pokeArray.splice(index, 1)
   }
   renderItem = ({ item, index }) => {
     if (item.empty === true) {
@@ -22,18 +26,25 @@ export class InventoryScreen extends React.Component {
     }
 
     return (
-      <View
-        style={styles.item}
-        >
-          {/*<Image style={styles.inventoryPokemon}
-                 source={require('../Assets/pikachu.gif')}>
-          </Image> */}
+      <View style={styles.item}>
+
+          <TouchableOpacity
+            onLongPress={() => {
+              console.log('You deleted ' + item.pokeName)
+              this.state.pokeArray.splice(index, 1)
+
+            fetch("http://10.101.1.51:3000/" + item._id + "/", {
+                method: 'DELETE'
+             })
+             this._getAllFromDataBase()
+            }}
+            style={styles.touchInventory}>
 
           {console.log("Pic of pokemon is: " + item.pokePic)}
           <Image style={styles.inventoryPokemon}
                  source={{uri: item.pokePic}}>
           </Image>
-
+          </TouchableOpacity>
           <Text style={styles.itemText}>{item.pokeName}</Text>
       </View>
     )
@@ -50,21 +61,13 @@ export class InventoryScreen extends React.Component {
     } catch (error) {
       console.log("Error playing sound")
     }
-
-    const formatData = (data) => {
-      const numberOfFullRows = Math.floor(data.length / 3)
-
-    let numberOfElementsLastRow = data.length - (numberOfFullRows * 3)
-    while (numberOfElementsLastRow !== 3 && numberOfElementsLastRow !== 0) {
-      data.push({ key: `blank-${numberOfElementsLastRow}`, empty: true})
-      numberOfElementsLastRow = numberOfElementsLastRow + 1
-    }
-    return data
-  }
-
+  this._getAllFromDataBase()
+}
+  _getAllFromDataBase() {
+    console.log("Inside get All From Database");
     //Victoria skolIP: 192.168.1.88
     //Moas skolIP: 192.168.1.89
-    fetch('http://localhost:3000/').then(function (response) {
+    fetch('http://10.101.1.51:3000/').then(function (response) {
       return response.json();
     })
     .then(result => {
@@ -75,6 +78,17 @@ export class InventoryScreen extends React.Component {
         pokeArrayIsFetched: true
       })
     })
+
+    const formatData = (data) => {
+      const numberOfFullRows = Math.floor(data.length / 3)
+
+    let numberOfElementsLastRow = data.length - (numberOfFullRows * 3)
+    while (numberOfElementsLastRow !== 3 && numberOfElementsLastRow !== 0) {
+      data.push({ key: `blank-${numberOfElementsLastRow}`, empty: true})
+      numberOfElementsLastRow = numberOfElementsLastRow + 1
+    }
+    return data
+    }
   }
 
   render() {
@@ -86,7 +100,6 @@ export class InventoryScreen extends React.Component {
       <Image style={styles.backgroundImage}
              source={require('../Assets/background5.png')}>
       </Image>
-
 
       <TouchableOpacity style={styles.exitArea} onPress={ ()=> {
           inventorySound.stopAsync()

@@ -24,7 +24,7 @@ export class BattleScreen extends React.Component {
   //Moas skolIP: 192.168.1.89:3000
   _throwPokeball() {
     console.log('You threw the ball!')
-    fetch('http://localhost:3000/', {
+    fetch('http://10.101.1.51:3000/', {
       body: JSON.stringify({
         pokeName: this.state.pokeName,
         pokePic: this.state.pokePic
@@ -88,8 +88,8 @@ export class BattleScreen extends React.Component {
         <Image style={styles.pokemon}
                source={this.state.pokePic ? {uri: this.state.pokePic} : require('../Assets/glitter.gif')}></Image>
 
-        {/*Pokebal pic*/}
-        <TouchableOpacity style={styles.clickArea} onPress={this._throwPokeball}>
+        {/*Pokeball pic*/}
+        <TouchableOpacity style={styles.bollArea} onPress={this._throwPokeball}>
           <Image style={styles.ball}
                  source={require('../Assets/pokeball.png')}></Image>
         </TouchableOpacity>
