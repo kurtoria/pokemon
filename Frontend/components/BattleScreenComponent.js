@@ -20,11 +20,11 @@ export class BattleScreen extends React.Component {
     header: null
   }
 
-  //Victoria skolIP: 192.168.1.88
-  //Moas skolIP: 192.168.1.89
+  //Victoria skolIP: 192.168.1.88:3000
+  //Moas skolIP: 192.168.1.89:3000
   _throwPokeball() {
     console.log('You threw the ball!')
-    fetch('http://192.168.1.88:3000/', {
+    fetch('http://10.101.1.51:3000/', {
       body: JSON.stringify({
         pokeName: this.state.pokeName,
         pokePic: this.state.pokePic
@@ -78,24 +78,28 @@ export class BattleScreen extends React.Component {
         <Image style={styles.backgroundImage}
                source={require('../Assets/background2.png')}>
         </Image>
-
+        <View style={styles.textView}/> {/*TODO: set styles right here and evaluate width from name.length*/}
         {/*Name of pokemon*/}
         {this.state.fontLoaded ? (
-        <Text style={styles.text}>{this.state.pokeName}</Text>
+        <Text style={styles.text}>{this.state.pokePic ? this.state.pokeName : ""}</Text>
         ) : null}
 
         {/*Pokemon pic*/}
         <Image style={styles.pokemon}
                source={this.state.pokePic ? {uri: this.state.pokePic} : require('../Assets/glitter.gif')}></Image>
 
-        {/*Pokebal pic*/}
-        <TouchableOpacity style={styles.clickArea} onPress={this._throwPokeball}>
+        {/*Pokeball pic*/}
+        <TouchableOpacity style={styles.bollArea} onPress={this._throwPokeball}>
           <Image style={styles.ball}
                  source={require('../Assets/pokeball.png')}></Image>
         </TouchableOpacity>
 
         {/*Back arrow*/}
-        <TouchableOpacity style={styles.exitArea} onPress={ ()=> navigate('Home') }>
+        <TouchableOpacity style={styles.exitArea} onPress={ ()=> {
+            battleSound.stopAsync()
+            this.props.navigation.goBack()
+          }
+         }>
           <Image style={styles.arrow}
                  source={require('../Assets/arrow.png')}></Image>
         </TouchableOpacity>

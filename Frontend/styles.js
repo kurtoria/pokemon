@@ -8,11 +8,6 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  button: {
-    flex: 1,
-    justifyContent: 'center',
-      position: 'absolute'
-  },
   backgroundImage: {
         flex: 1,
         width: 500,
@@ -23,8 +18,8 @@ export const styles = StyleSheet.create({
       position: 'absolute',
       top: '5%',
       justifyContent: 'center',
-      width: 400,
-      height: 100
+      width: 350,
+      height: 90
     },
     ball: {
       position: 'absolute',
@@ -40,10 +35,9 @@ export const styles = StyleSheet.create({
       width: 100,
       height: 50
     },
-    clickArea: {
+    bollArea: {
       position: 'absolute',
       top: '80%',
-      left: '40%',
       width: 100,
       height: 100
     },
@@ -63,7 +57,7 @@ export const styles = StyleSheet.create({
       position: 'absolute',
       width: 50,
       height: 50,
-      top: '38%'
+      top: '35%'
     },
     question: {
       position: 'absolute',
@@ -87,23 +81,18 @@ export const styles = StyleSheet.create({
       width: 250,
       height: 250,
     },
-    text: {
+    textView: {
+      backgroundColor: '#FFFFFF70',
+      borderRadius: 10,
+      borderWidth: 0,
       position: 'absolute',
-      color: 'white',
       top: '30%',
-      fontFamily: "fipps-regular",
-      fontSize: 20
-    },
-    presentPokemon: {
-      position: 'absolute',
-      color: 'blue',
-      top: '30%',
-      fontFamily: "fipps-regular",
-      fontSize: 20
+      width: 240,
+      height: 45
     },
     text: {
       position: 'absolute',
-      color: 'white',
+      color: 'black',
       top: '30%',
       fontFamily: "fipps-regular",
       fontSize: 20
@@ -119,7 +108,10 @@ export const styles = StyleSheet.create({
       flex: 1,
       marginVertical: 20,
       backgroundColor: 'transparent',
-      width: Dimensions.get('window').width
+      width: Dimensions.get('window').width,
+      height: Dimensions.get('window').height - 60,
+      position: 'absolute',
+      top: 60
     },
     item: {
       backgroundColor: 'transparent',
@@ -133,6 +125,16 @@ export const styles = StyleSheet.create({
       backgroundColor: 'transparent'
     },
     itemText: {
-      color: 'red'
+      color: 'black',
+      fontFamily: "fipps-regular",
+      fontSize: 12
+    },
+    inventoryPokemon: {
+      width: 130,
+      height: 130,
+      top: '20%'
+    },
+    touchInventory: {
+      
     }
 });
