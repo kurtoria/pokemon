@@ -20,11 +20,9 @@ export class BattleScreen extends React.Component {
     header: null
   }
 
-  //Victoria skolIP: 192.168.1.88:3000
-  //Moas skolIP: 192.168.1.89:3000
   _throwPokeball() {
     console.log('You threw the ball!')
-    fetch('http://10.101.1.51:3000/', {
+    fetch('http://192.168.1.167:3000/', {
       body: JSON.stringify({
         pokeName: this.state.pokeName,
         pokePic: this.state.pokePic

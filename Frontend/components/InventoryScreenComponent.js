@@ -15,6 +15,7 @@ export class InventoryScreen extends React.Component {
       pokeArrayIsFetched: false
     }
   this._getAllFromDataBase = this._getAllFromDataBase.bind(this)
+  //this._startMusic = this._startMusic.bind(this)
   }
   _onLongPressInventory(index, name) {
     console.log('You deleted ' + name)
@@ -33,7 +34,7 @@ export class InventoryScreen extends React.Component {
               console.log('You deleted ' + item.pokeName)
               this.state.pokeArray.splice(index, 1)
 
-            fetch("http://10.101.1.51:3000/" + item._id + "/", {
+            fetch("http://192.168.1.167:3000/" + item._id + "/", {
                 method: 'DELETE'
              })
              this._getAllFromDataBase()
@@ -54,20 +55,28 @@ export class InventoryScreen extends React.Component {
     header: null
   }
   async componentDidMount() {
-    try {
+    /*try {
       await inventorySound.loadAsync(require('../Assets/inventory.mp3'))
       await inventorySound.playAsync()
       console.log("Playing sound")
     } catch (error) {
       console.log("Error playing sound")
-    }
+    }*/
+    this._startMusic()
   this._getAllFromDataBase()
+}
+async _startMusic() {
+  try {
+    await inventorySound.loadAsync(require('../Assets/inventory.mp3'))
+    await inventorySound.playAsync()
+    console.log("Playing sound")
+  } catch (error) {
+    console.log("Error playing sound")
+  }
 }
   _getAllFromDataBase() {
     console.log("Inside get All From Database");
-    //Victoria skolIP: 192.168.1.88
-    //Moas skolIP: 192.168.1.89
-    fetch('http://10.101.1.51:3000/').then(function (response) {
+    fetch('http://192.168.1.167:3000/').then(function (response) {
       return response.json();
     })
     .then(result => {
