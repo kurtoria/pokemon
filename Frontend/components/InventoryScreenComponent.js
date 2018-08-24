@@ -1,5 +1,6 @@
 import React from 'react';
 import { styles } from '../styles.js'
+import { DeviceEventEmitter } from 'react-native';
 import { Font } from 'expo';
 import { StyleSheet, Text, View, Image, TouchableHighlight, TouchableOpacity, FlatList, Dimensions } from 'react-native';
 const inventorySound = new Expo.Audio.Sound();
@@ -15,7 +16,7 @@ export class InventoryScreen extends React.Component {
       pokeArrayIsFetched: false
     }
   this._getAllFromDataBase = this._getAllFromDataBase.bind(this)
-  //this._startMusic = this._startMusic.bind(this)
+  //this._startMusic = this._startMusic.bind(this)jf
   }
   _onLongPressInventory(index, name) {
     console.log('You deleted ' + name)
@@ -63,7 +64,14 @@ export class InventoryScreen extends React.Component {
       console.log("Error playing sound")
     }
   this._getAllFromDataBase()
-}
+  }
+  componentWillMount() {
+    console.log("i componentwillmount inventory");
+    DeviceEventEmitter.addListener('startInventoryMusic', (e)=>{
+      console.log("Hej inv")
+      inventorySound.playAsync()
+    })
+  }
   _getAllFromDataBase() {
     console.log("Inside get All From Database");
     fetch('http://192.168.1.167:3000/').then(function (response) {
@@ -103,6 +111,7 @@ export class InventoryScreen extends React.Component {
       <TouchableOpacity style={styles.exitArea} onPress={ ()=> {
           inventorySound.stopAsync()
           navigate('Home')
+          DeviceEventEmitter.emit('startHomeMusic',  {})
         }
        }>
         <Image style={styles.arrow}

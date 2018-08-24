@@ -1,4 +1,6 @@
 import React from 'react';
+import { DeviceEventEmitter } from 'react-native';
+
 import { Font } from 'expo';
 import { styles } from '../styles.js'
 import { StyleSheet, Text, View, Image, TouchableHighlight, TouchableOpacity, Flatlist } from 'react-native';
@@ -127,6 +129,7 @@ export class BattleScreen extends React.Component {
         {/*Back arrow*/}
         <TouchableOpacity style={styles.exitArea} onPress={ ()=> {
             battleSound.stopAsync()
+            DeviceEventEmitter.emit('startHomeMusic',  {})
             this.props.navigation.goBack()
           }
          }>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { DeviceEventEmitter } from 'react-native';
 import { styles } from '../styles.js'
 import { StyleSheet, Text, View, Image, TouchableHighlight, TouchableOpacity, Flatlist } from 'react-native';
 const themeSound = new Expo.Audio.Sound();
@@ -8,8 +9,8 @@ export class HomeScreen extends React.Component {
     title: 'Home',
     header: null
   }
-  async componentDidMount() {
 
+  async componentDidMount() {
     try {
       await themeSound.loadAsync(require('../Assets/theme.mp3'))
       await themeSound.playAsync()
@@ -18,7 +19,13 @@ export class HomeScreen extends React.Component {
       console.log("Error playing sound")
     }
   }
-
+  componentWillMount() {
+    console.log("i componentwillmount home");
+    DeviceEventEmitter.addListener('startHomeMusic', (e)=>{
+      console.log("Hej hem")
+      themeSound.playAsync()
+    })
+  }
   render() {
     const { navigate } = this.props.navigation
     return (
