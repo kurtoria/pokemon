@@ -61,10 +61,23 @@ app.delete('/:id', function (request, result) {
   result.json({ success: id })
 });
 
-//Kanske behövs för att patha till rätt håll? Koll upp!
-//var path = require('path');
-//app.use(express.static(path.join(path.resolve(), '../Frontend')));
+/*
+app.get('/users/:username', function(request, response) {
+  response.send([1, 2, 3, request.params.username])
+})
+*/
 
+
+//To search after specific name
+app.get('/search/:name', function(request, response) {
+  db.collection('pokemons').find({"pokeName": request.params.name}).toArray(function (error, result) {
+    if (error) {
+      response.status(500).send(error);
+      return;
+    }
+    response.send(result)
+  })
+})
 
 //Listen pga importante
 app.listen(3000, function() {
