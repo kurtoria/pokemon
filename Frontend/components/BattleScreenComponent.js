@@ -87,7 +87,7 @@ export class BattleScreen extends React.Component {
 
   componentWillMount() {
     console.log("i componentwillmount inventory");
-    DeviceEventEmitter.addListener('startInventoryMusic', (e)=>{
+    DeviceEventEmitter.addListener('startBattleMusic', (e)=>{
       console.log("Hej inv")
       battleSound.playAsync()
     })

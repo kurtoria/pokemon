@@ -40,6 +40,7 @@ export class HomeScreen extends React.Component {
                source={require('../Assets/pikachu.gif')} />
              <TouchableOpacity style={styles.questionArea} onPress={ ()=> {
                  themeSound.stopAsync()
+                 DeviceEventEmitter.emit('startBattleMusic',  {})
                  navigate('Battle')
                }
               }>
@@ -48,6 +49,7 @@ export class HomeScreen extends React.Component {
         </TouchableOpacity>
         <TouchableOpacity style={styles.bagArea} onPress={ ()=> {
             themeSound.stopAsync()
+            DeviceEventEmitter.emit('startInventoryMusic',  {})
             navigate('Inventory')}
            }>
             <Image style={styles.bag}
