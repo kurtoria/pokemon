@@ -13,7 +13,8 @@ export class BattleScreen extends React.Component {
       pokePic: null,
       cp: undefined,
       fontLoaded: false,
-      isCatching: false
+      isCatching: false,
+      isCatched: false
     }
     this._throwPokeball = this._throwPokeball.bind(this)
   }
@@ -24,34 +25,47 @@ export class BattleScreen extends React.Component {
 
   _throwPokeball() {
     console.log('You threw the ball!')
-    fetch('http://192.168.1.167:3000/', {
-      body: JSON.stringify({
-        pokeName: this.state.pokeName,
-        pokePic: this.state.pokePic
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'POST'
-    }).catch(function(error) {
-      console.log("Error: " + error);
-    })
+    let nr = Math.floor(Math.random() * 3) + 1
+    console.log("NR is " + nr);
 
     this.setState({
       isCatching: true
     })
-    console.log("catching before: " + this.state.isCatching);
-
 
     setTimeout(() => {
+
+
       this.setState({
         isCatching: false
       })
       console.log("catching after: " + this.state.isCatching);
       console.log("3 sec after");
+
+      if (nr <= 2) {
+        console.log('You catched it')
+        fetch('http://192.168.1.84:3000/', {
+          body: JSON.stringify({
+            pokeName: this.state.pokeName,
+            pokePic: this.state.pokePic
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          method: 'POST'
+        }).catch(function(error) {
+          console.log("Error: " + error);
+        })
+
+        this.setState({
+          isCatched: true
+        })
+
+      } else {
+        console.log("It ran away");
+      }
+
+
     }, 3000)
-
-
 
   }
   async componentDidMount() {
@@ -104,12 +118,11 @@ export class BattleScreen extends React.Component {
                source={require('../Assets/background2.png')}>
         </Image>
 
-        {this.state.isCatching ? null :
+        {this.state.isCatching && this.state.pokePic ? null :
         <View style={styles.textView}/>
         }
 
         {/*Name of pokemon*/}
-
         {this.state.fontLoaded && !this.state.isCatching ? (
         <Text style={styles.text}>{this.state.pokePic ? this.state.pokeName : ""}</Text>
         ) : null}
@@ -125,8 +138,13 @@ export class BattleScreen extends React.Component {
                source={this.state.pokePic ? {uri: this.state.pokePic} : require('../Assets/glitter.gif')}></Image>
            }
 
+        {/*Glitter while catching*/}
+        {this.state.isCatching ?
+        <Image style={styles.pokemon}
+                    source={require('../Assets/glitter.gif')}></Image> : null }
+
         {/*Pokeball pic*/}
-        {this.state.isCatching ? null :
+        {this.state.isCatching || this.state.isCatched ? null :
         <TouchableOpacity style={styles.bollArea} onPress={this._throwPokeball}>
           <Image style={styles.ball}
                  source={require('../Assets/pokeball.png')}></Image>
