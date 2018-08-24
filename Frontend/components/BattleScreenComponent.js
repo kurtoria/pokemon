@@ -4,6 +4,7 @@ import { Font } from 'expo';
 import { styles } from '../styles.js'
 import { StyleSheet, Text, View, Image, TouchableHighlight, TouchableOpacity, Flatlist } from 'react-native';
 const battleSound = new Expo.Audio.Sound();
+const victorySound = new Expo.Audio.Sound();
 
 export class BattleScreen extends React.Component {
   constructor(props) {
@@ -14,7 +15,9 @@ export class BattleScreen extends React.Component {
       /*cp: undefined,*/
       fontLoaded: false,
       isCatching: false,
-      isCatched: false
+      isCaught: false,
+      lengthOfName: 0,
+      didFlee: false
     }
     this._throwPokeball = this._throwPokeball.bind(this)
   }
@@ -42,7 +45,7 @@ export class BattleScreen extends React.Component {
       console.log("3 sec after");
 
       if (nr <= 2) {
-        console.log('You catched it')
+        console.log('You caught it')
         fetch('http://192.168.1.84:3000/', {
           body: JSON.stringify({
             pokeName: this.state.pokeName,
@@ -57,11 +60,21 @@ export class BattleScreen extends React.Component {
         })
 
         this.setState({
-          isCatched: true
+          isCaught: true,
+          pokeName: "Gotcha!",
+          lengthOfName: 7
         })
+
+        this._playVictorySound()
 
       } else {
         console.log("It ran away");
+        this.setState({
+          isCaugth: false,
+          pokeName: "The wild pokemon fled",
+          lengthOfName: 21,
+          didFlee: true
+        })
       }
 
 
@@ -87,6 +100,9 @@ export class BattleScreen extends React.Component {
         pokeName: result.forms[0].name.toUpperCase(),
         pokePic: result.sprites.front_default
       })
+      this.setState({
+        lengthOfName: this.state.pokeName.length
+      })
     })
 
     try {
@@ -96,7 +112,22 @@ export class BattleScreen extends React.Component {
     } catch (error) {
       console.log("Error playing sound")
     }
+  }
 
+  async _playVictorySound() {
+    console.log("Should play victory music");
+    DeviceEventEmitter.addListener('startVictoryMusic', (e)=>{
+      battleSound.playAsync()
+    })
+
+    try {
+      await victorySound.loadAsync(require('../Assets/victory.mp3'))
+      await victorySound.playAsync()
+      console.log("Playing sound")
+      battleSound.stopAsync()
+    } catch (error) {
+      console.log("Error playing sound")
+    }
   }
 
   componentWillMount() {
@@ -118,24 +149,33 @@ export class BattleScreen extends React.Component {
                source={require('../Assets/background2.png')}>
         </Image>
 
-        {this.state.isCatching && this.state.pokePic ? null :
-        <View style={styles.textView}/>
-        }
+        {/*Text view*/}
+        {this.state.isCatching  ? null :
+        <View style={
+          {
+            backgroundColor: '#FFFFFF70',
+            borderRadius: 10,
+            borderWidth: 0,
+            position: 'absolute',
+            top: '26%',
+            height: 45,
+            width: this.state.lengthOfName * 26
+          }
+        }/>
+    }
 
         {/*Name of pokemon*/}
         {this.state.fontLoaded && !this.state.isCatching ? (
         <Text style={styles.text}>{this.state.pokePic ? this.state.pokeName : ""}</Text>
         ) : null}
 
-
-
         {/*Pokemon pic*/}
-        {this.state.isCatching ?
+        {this.state.isCatching || this.state.isCaught ?
         <Image style={styles.pokemon}
                  source={require('../Assets/pokeball.png')}></Image> :
 
         <Image style={styles.pokemon}
-               source={this.state.pokePic ? {uri: this.state.pokePic} : require('../Assets/glitter.gif')}></Image>
+               source={this.state.pokePic && !this.state.didFlee ? {uri: this.state.pokePic} : require('../Assets/glitter.gif')}></Image>
            }
 
         {/*Glitter while catching*/}
@@ -144,7 +184,7 @@ export class BattleScreen extends React.Component {
                     source={require('../Assets/glitter.gif')}></Image> : null }
 
         {/*Pokeball pic*/}
-        {this.state.isCatching || this.state.isCatched ? null :
+        {this.state.isCatching || this.state.isCaught || this.state.didFlee ? null :
         <TouchableOpacity style={styles.bollArea} onPress={this._throwPokeball}>
           <Image style={styles.ball}
                  source={require('../Assets/pokeball.png')}></Image>

@@ -81,19 +81,10 @@ export const styles = StyleSheet.create({
       width: 250,
       height: 250,
     },
-    textView: {
-      backgroundColor: '#FFFFFF70',
-      borderRadius: 10,
-      borderWidth: 0,
-      position: 'absolute',
-      top: '30%',
-      width: 240,
-      height: 45
-    },
     text: {
       position: 'absolute',
       color: 'black',
-      top: '30%',
+      top: '26%',
       fontFamily: "fipps-regular",
       fontSize: 20
     },
@@ -135,6 +126,6 @@ export const styles = StyleSheet.create({
       top: '20%'
     },
     touchInventory: {
-      
+
     }
 });
