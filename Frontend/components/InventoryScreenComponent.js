@@ -2,7 +2,7 @@ import React from 'react';
 import { styles } from '../styles.js'
 import { DeviceEventEmitter } from 'react-native';
 import { Font } from 'expo';
-import { StyleSheet, Text, View, Image, TouchableHighlight, TouchableOpacity, FlatList, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableHighlight, TouchableOpacity, FlatList, Dimensions, SearchBar } from 'react-native';
 const inventorySound = new Expo.Audio.Sound();
 
 export class InventoryScreen extends React.Component {
@@ -13,9 +13,11 @@ export class InventoryScreen extends React.Component {
       pokePic: null,
       fontLoaded: false,
       pokeArray: [],
-      pokeArrayIsFetched: false
+      pokeArrayIsFetched: false/*,
+      pokeSearch: undefined*/
     }
   this._getAllFromDataBase = this._getAllFromDataBase.bind(this)
+  this._searchPokedex = this._searchPokedex.bind(this)
   }
   _onLongPressInventory(index, name) {
     console.log('You deleted ' + name)
@@ -63,6 +65,7 @@ export class InventoryScreen extends React.Component {
       console.log("Error playing sound")
     }
   this._getAllFromDataBase()
+  this._searchPokedex()
   }
   componentWillMount() {
     console.log("i componentwillmount inventory");
@@ -96,6 +99,17 @@ export class InventoryScreen extends React.Component {
     return data
     }
   }
+  _searchPokedex() {
+    var url = 'http://192.168.1.167:3000/' + this.state.pokeSearch
+    console.log("URL: " + url);
+    fetch(url)
+    .then(function (response) {
+      return response.json()
+    })
+    .then(result => {
+      console.log(result);
+    })
+  }
 
   render() {
     const { navigate } = this.props.navigation
@@ -113,9 +127,12 @@ export class InventoryScreen extends React.Component {
           DeviceEventEmitter.emit('startHomeMusic',  {})
         }
        }>
+
         <Image style={styles.arrow}
                source={require('../Assets/arrow.png')}></Image>
       </TouchableOpacity>
+
+
 
 
       {this.state.pokeArrayIsFetched ? (

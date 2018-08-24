@@ -11,7 +11,7 @@ export class BattleScreen extends React.Component {
     this.state = {
       pokeName: undefined,
       pokePic: null,
-      cp: undefined,
+      /*cp: undefined,*/
       fontLoaded: false,
       isCatching: false
     }
