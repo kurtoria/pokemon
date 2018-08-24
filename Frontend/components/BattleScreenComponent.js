@@ -1,6 +1,5 @@
 import React from 'react';
 import { DeviceEventEmitter } from 'react-native';
-
 import { Font } from 'expo';
 import { styles } from '../styles.js'
 import { StyleSheet, Text, View, Image, TouchableHighlight, TouchableOpacity, Flatlist } from 'react-native';
@@ -84,6 +83,14 @@ export class BattleScreen extends React.Component {
       console.log("Error playing sound")
     }
 
+  }
+
+  componentWillMount() {
+    console.log("i componentwillmount inventory");
+    DeviceEventEmitter.addListener('startInventoryMusic', (e)=>{
+      console.log("Hej inv")
+      battleSound.playAsync()
+    })
   }
   render() {
     console.log("IN RENDER: " + this.state.pokePic)

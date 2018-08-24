@@ -16,7 +16,6 @@ export class InventoryScreen extends React.Component {
       pokeArrayIsFetched: false
     }
   this._getAllFromDataBase = this._getAllFromDataBase.bind(this)
-  //this._startMusic = this._startMusic.bind(this)jf
   }
   _onLongPressInventory(index, name) {
     console.log('You deleted ' + name)
