@@ -14,7 +14,8 @@ export class InventoryScreen extends React.Component {
       fontLoaded: false,
       pokeArray: [],
       pokeArrayOrigin: [],
-      pokeArrayIsFetched: false/*,
+      pokeArrayIsFetched: false
+      /*,
       pokeSearch: undefined*/
     }
   this._getAllFromDataBase = this._getAllFromDataBase.bind(this)
@@ -37,7 +38,7 @@ export class InventoryScreen extends React.Component {
               console.log('You deleted ' + item.pokeName)
               this.state.pokeArray.splice(index, 1)
 
-            fetch("http://192.168.1.167:3000/" + item._id + "/", {
+            fetch("http://localhost:3000/" + item._id + "/", {
                 method: 'DELETE'
              })
              this._getAllFromDataBase()
@@ -76,7 +77,7 @@ export class InventoryScreen extends React.Component {
   }
   _getAllFromDataBase() {
     console.log("Inside get All From Database");
-    fetch('http://192.168.1.167:3000/').then(function (response) {
+    fetch('http://localhost:3000/').then(function (response) {
       return response.json();
     })
     .then(result => {
@@ -101,7 +102,7 @@ export class InventoryScreen extends React.Component {
     }
   }
   _searchPokedex() {
-    var url = 'http://192.168.1.167:3000/' + this.state.pokeSearch
+    var url = 'http://localhost:3000/' + this.state.pokeSearch
     console.log("URL: " + url);
     fetch(url)
     .then(function (response) {
