@@ -13,6 +13,7 @@ export class InventoryScreen extends React.Component {
       pokePic: null,
       fontLoaded: false,
       pokeArray: [],
+      pokeArrayOrigin: [],
       pokeArrayIsFetched: false/*,
       pokeSearch: undefined*/
     }
@@ -43,7 +44,6 @@ export class InventoryScreen extends React.Component {
             }}
             style={styles.touchInventory}>
 
-          {console.log("Pic of pokemon is: " + item.pokePic)}
           <Image style={styles.inventoryPokemon}
                  source={{uri: item.pokePic}}>
           </Image>
@@ -80,10 +80,11 @@ export class InventoryScreen extends React.Component {
       return response.json();
     })
     .then(result => {
-      console.log(result);
+      //console.log(result);
 
       this.setState({
         pokeArray: formatData(result.map(pokeItem => ({ ...pokeItem, key: pokeItem._id}))),
+        pokeArrayOrigin: formatData(result.map(pokeItem => ({ ...pokeItem, key: pokeItem._id}))),
         pokeArrayIsFetched: true
       })
     })
@@ -113,7 +114,7 @@ export class InventoryScreen extends React.Component {
 
   render() {
     const { navigate } = this.props.navigation
-    console.log("Styles: " + styles.flatlistContainer);
+    console.log("in render");
 
     return (
       <View style={styles.container}>
@@ -132,9 +133,6 @@ export class InventoryScreen extends React.Component {
                source={require('../Assets/arrow.png')}></Image>
       </TouchableOpacity>
 
-
-
-
       {this.state.pokeArrayIsFetched ? (
         <FlatList
           data={this.state.pokeArray}
@@ -144,8 +142,59 @@ export class InventoryScreen extends React.Component {
           />
       ) : null}
 
+      <TouchableOpacity style={{
+            position: 'absolute',
+            height: 40,
+            width: 40,
+            top: 35,
+            right: 20
+          }} onPress={ ()=> {
+            this.setState({
+              pokeArray: this.state.pokeArrayOrigin.reverse()
+            })
+            console.log("first in new list: " + this.state.pokeArray[0].pokeName);
+      }}>
 
+      <Image style={{
+        position: 'absolute',
+        height: 40,
+        width: 40}}
+      source={require('../Assets/time.png')}></Image>
+      </TouchableOpacity>
 
+      <TouchableOpacity style={{
+            position: 'absolute',
+            height: 40,
+            width: 40,
+            top: 35,
+            right: 80
+          }} onPress={ ()=> {
+            console.log("ABC");
+
+            function compare(a, b) {
+              var nameA = a.pokeName
+              var nameB = b.pokeName
+              if (nameA < nameB) {
+                return -1;
+              }
+              if (nameA > nameB) {
+                return 1;
+              }
+              return 0;
+            }
+
+            this.setState({
+              pokeArray: this.state.pokeArray.sort(compare)
+            })
+            console.log("first in new list: " + this.state.pokeArray[0].pokeName);
+      }}>
+
+      <Image style={{
+        position: 'absolute',
+        height: 40,
+        width: 40}}
+      source={require('../Assets/abc.png')}></Image>
+      </TouchableOpacity>
 
       </View>
     )

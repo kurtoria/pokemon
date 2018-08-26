@@ -65,7 +65,7 @@ export class BattleScreen extends React.Component {
           lengthOfName: 7
         })
 
-        this._playVictorySound()
+        //this._playVictorySound()
 
       } else {
         console.log("It ran away");
@@ -105,15 +105,16 @@ export class BattleScreen extends React.Component {
       })
     })
 
+
     try {
       await battleSound.loadAsync(require('../Assets/battle.mp3'))
       await battleSound.playAsync()
       console.log("Playing sound")
     } catch (error) {
       console.log("Error playing sound")
-    }
+    } 
   }
-
+/*
   async _playVictorySound() {
     console.log("Should play victory music");
     DeviceEventEmitter.addListener('startVictoryMusic', (e)=>{
@@ -128,7 +129,7 @@ export class BattleScreen extends React.Component {
     } catch (error) {
       console.log("Error playing sound")
     }
-  }
+  }*/
 
   componentWillMount() {
     console.log("i componentwillmount inventory");
