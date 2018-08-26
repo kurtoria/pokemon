@@ -13,8 +13,7 @@ export class InventoryScreen extends React.Component {
       pokePic: null,
       fontLoaded: false,
       pokeArray: [],
-      pokeArrayIsFetched: false/*,
-      pokeSearch: undefined*/
+      pokeArrayIsFetched: false
     }
   this._getAllFromDataBase = this._getAllFromDataBase.bind(this)
   this._searchPokedex = this._searchPokedex.bind(this)
@@ -132,9 +131,6 @@ export class InventoryScreen extends React.Component {
                source={require('../Assets/arrow.png')}></Image>
       </TouchableOpacity>
 
-
-
-
       {this.state.pokeArrayIsFetched ? (
         <FlatList
           data={this.state.pokeArray}
@@ -143,9 +139,6 @@ export class InventoryScreen extends React.Component {
           numColumns={3}
           />
       ) : null}
-
-
-
 
       </View>
     )

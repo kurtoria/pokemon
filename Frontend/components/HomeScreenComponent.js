@@ -22,7 +22,6 @@ export class HomeScreen extends React.Component {
   componentWillMount() {
     console.log("i componentwillmount home");
     DeviceEventEmitter.addListener('startHomeMusic', (e)=>{
-      console.log("Hej hem")
       themeSound.playAsync()
     })
   }

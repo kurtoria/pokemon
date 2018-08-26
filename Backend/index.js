@@ -1,8 +1,8 @@
 var bodyParser= require('body-parser')
 var express = require('express')
-var MongoClient = require('mongodb').MongoClient;
-var ObjectId = require('mongodb').ObjectID
-//var {MongoClient, ObjectId} = require('mongodb')
+//var MongoClient = require('mongodb').MongoClient;
+//var ObjectId = require('mongodb').ObjectID
+var {MongoClient, ObjectId} = require('mongodb')
 
 
 var app = express()
@@ -50,7 +50,6 @@ app.post('/', function(request, response) {
 //To delete pokemon from id
 app.delete('/:id', function (request, result) {
   var id = request.params.id;
-  //var collection = db.get().collection('pokemons');
 
   db.collection('pokemons').deleteOne({ _id: new ObjectId(id) }, function (error, results) {
     if (error) {
@@ -60,12 +59,6 @@ app.delete('/:id', function (request, result) {
   });
   result.json({ success: id })
 });
-
-/*
-app.get('/users/:username', function(request, response) {
-  response.send([1, 2, 3, request.params.username])
-})
-*/
 
 
 //To search after specific name
