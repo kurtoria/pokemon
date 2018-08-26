@@ -12,7 +12,6 @@ export class BattleScreen extends React.Component {
     this.state = {
       pokeName: undefined,
       pokePic: null,
-      /*cp: undefined,*/
       fontLoaded: false,
       isCatching: false,
       isCaught: false,
@@ -37,7 +36,6 @@ export class BattleScreen extends React.Component {
 
     setTimeout(() => {
 
-
       this.setState({
         isCatching: false
       })
@@ -45,8 +43,9 @@ export class BattleScreen extends React.Component {
       console.log("3 sec after");
 
       if (nr <= 2) {
-        console.log('You caught it')
-        fetch('http://192.168.1.84:3000/', {
+        console.log('You catched it')
+        fetch('http://192.168.1.167:3000/', {
+
           body: JSON.stringify({
             pokeName: this.state.pokeName,
             pokePic: this.state.pokePic
@@ -105,22 +104,23 @@ export class BattleScreen extends React.Component {
       })
     })
 
-
+    //Load and play battle music
     try {
       await battleSound.loadAsync(require('../Assets/battle.mp3'))
       await battleSound.playAsync()
       console.log("Playing sound")
     } catch (error) {
-      console.log("Error playing sound")
-    } 
+      console.log("Error playing battle sound: " + error)
+    }
   }
 /*
   async _playVictorySound() {
-    console.log("Should play victory music");
-    DeviceEventEmitter.addListener('startVictoryMusic', (e)=>{
-      battleSound.playAsync()
-    })
+      console.log("Should play victory music");
+      DeviceEventEmitter.addListener('startVictoryMusic', (e)=>{
+        battleSound.playAsync()
+      })
 
+<<<<<<< HEAD
     try {
       await victorySound.loadAsync(require('../Assets/victory.mp3'))
       await victorySound.playAsync()
@@ -130,13 +130,22 @@ export class BattleScreen extends React.Component {
       console.log("Error playing sound")
     }
   }*/
+      try {
+        await victorySound.loadAsync(require('../Assets/victory.mp3'))
+        await victorySound.playAsync()
+        battleSound.stopAsync()
+        console.log("Play victory music");
+      } catch (error) {
+        console.log("Error playing sound: " + error)
+      }
+  }
 
   componentWillMount() {
     console.log("i componentwillmount inventory");
     DeviceEventEmitter.addListener('startBattleMusic', (e)=>{
-      console.log("Hej inv")
       battleSound.playAsync()
     })
+
   }
   render() {
     console.log("IN RENDER: " + this.state.pokePic)
