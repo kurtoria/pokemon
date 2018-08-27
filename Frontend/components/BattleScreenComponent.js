@@ -6,6 +6,8 @@ import { StyleSheet, Text, View, Image, TouchableHighlight, TouchableOpacity, Fl
 const battleSound = new Expo.Audio.Sound();
 const victorySound = new Expo.Audio.Sound();
 
+const localhost = 'http://localhost:3000/'
+
 export class BattleScreen extends React.Component {
   constructor(props) {
     super(props)
@@ -44,7 +46,7 @@ export class BattleScreen extends React.Component {
 
       if (nr <= 2) {
         console.log('You catched it')
-        fetch('http://192.168.1.167:3000/', {
+        fetch(localhost, {
 
           body: JSON.stringify({
             pokeName: this.state.pokeName,
@@ -117,7 +119,7 @@ export class BattleScreen extends React.Component {
   async _playVictorySound() {
       console.log("Should play victory music");
       DeviceEventEmitter.addListener('startVictoryMusic', (e)=>{
-        battleSound.playAsync()
+        victorySound.playAsync()
       })
 
       try {
@@ -126,7 +128,7 @@ export class BattleScreen extends React.Component {
         battleSound.stopAsync()
         console.log("Play victory music");
       } catch (error) {
-        console.log("Error playing sound: " + error)
+        console.log("Error playing victory sound: " + error)
       }
   }
 

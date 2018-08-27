@@ -5,6 +5,8 @@ import { Font } from 'expo';
 import { StyleSheet, Text, View, Image, TouchableHighlight, TouchableOpacity, FlatList, Dimensions, SearchBar } from 'react-native';
 const inventorySound = new Expo.Audio.Sound();
 
+const localhost = 'http://localhost:3000/'
+
 export class InventoryScreen extends React.Component {
   constructor(props) {
     super(props)
@@ -38,7 +40,7 @@ export class InventoryScreen extends React.Component {
               console.log('You deleted ' + item.pokeName)
               this.state.pokeArray.splice(index, 1)
 
-            fetch("http://localhost:3000/" + item._id + "/", {
+            fetch(localhost + item._id + "/", {
                 method: 'DELETE'
              })
              this._getAllFromDataBase()
@@ -77,7 +79,7 @@ export class InventoryScreen extends React.Component {
   }
   _getAllFromDataBase() {
     console.log("Inside get All From Database");
-    fetch('http://localhost:3000/').then(function (response) {
+    fetch(localhost).then(function (response) {
       return response.json();
     })
     .then(result => {
@@ -102,7 +104,7 @@ export class InventoryScreen extends React.Component {
     }
   }
   _searchPokedex() {
-    var url = 'http://localhost:3000/' + this.state.pokeSearch
+    var url = localhost + this.state.pokeSearch
     console.log("URL: " + url);
     fetch(url)
     .then(function (response) {
