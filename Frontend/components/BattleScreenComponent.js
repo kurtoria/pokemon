@@ -44,7 +44,7 @@ export class BattleScreen extends React.Component {
 
       if (nr <= 2) {
         console.log('You catched it')
-        fetch('http://192.168.1.167:3000/', {
+        fetch('http://localhost:3000/', {
 
           body: JSON.stringify({
             pokeName: this.state.pokeName,

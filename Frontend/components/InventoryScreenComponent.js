@@ -14,11 +14,12 @@ export class InventoryScreen extends React.Component {
       fontLoaded: false,
       pokeArray: [],
       pokeArrayOrigin: [],
-      pokeArrayIsFetched: false
+      pokeArrayIsFetched: false,
+      isReversed: false
       /*,
       pokeSearch: undefined*/
     }
-  this._getAllFromDataBase = this._getAllFromDataBase.bind(this)
+  this._getAllFromDataBase = this._getAllFromDataBase.bind(this) 
   this._searchPokedex = this._searchPokedex.bind(this)
   }
   _onLongPressInventory(index, name) {
@@ -26,9 +27,11 @@ export class InventoryScreen extends React.Component {
     this.state.pokeArray.splice(index, 1)
   }
   renderItem = ({ item, index }) => {
-    if (item.empty === true) {
+    if (item.empty === true && !this.state.isReversed) {
       return <View style={[styles.item, styles.itemInvisible]}/>
     }
+
+    console.log("is reversed: " + this.state.isReversed);
 
     return (
       <View style={styles.item}>
@@ -151,6 +154,7 @@ export class InventoryScreen extends React.Component {
             right: 20
           }} onPress={ ()=> {
             this.setState({
+              isReversed: true,
               pokeArray: this.state.pokeArrayOrigin.reverse()
             })
             console.log("first in new list: " + this.state.pokeArray[0].pokeName);
@@ -184,8 +188,12 @@ export class InventoryScreen extends React.Component {
               return 0;
             }
 
+            let arrayb = this.state.pokeArray.sort(compare)
+            let newArray = Array.from(arrayb)
+
             this.setState({
-              pokeArray: this.state.pokeArray.sort(compare)
+              isReversed: false,
+              pokeArray: newArray
             })
             console.log("first in new list: " + this.state.pokeArray[0].pokeName);
       }}>
